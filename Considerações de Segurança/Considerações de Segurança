@@ -1,0 +1,6 @@
+def validar_aceleracao(aceleracao):
+    if not isinstance(aceleracao, (int, float)):
+        raise ValueError("Aceleração deve ser um número")
+    if aceleracao < 0 or aceleracao > 100:
+        raise ValueError("Aceleração fora do intervalo esperado")
+    return aceleracao

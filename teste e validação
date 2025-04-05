@@ -1,0 +1,74 @@
+import random
+import time
+import numpy as np
+from collections import deque
+import unittest
+
+LIMIAR_DE_ACELERACAO = 50
+TAM_FILTRO = 5
+TEMPO_DE_AQUISICAO = 1
+
+def ler_aceleracao():
+    return random.uniform(0, 100)
+
+def filtro_media_movel(dados, tamanho_filtro):
+    if len(dados) < tamanho_filtro:
+        return np.mean(dados)
+    return np.mean(dados[-tamanho_filtro:])
+
+def detectar_impacto(aceleracao_filtrada):
+    if aceleracao_filtrada >= LIMIAR_DE_ACELERACAO:
+        return True
+    return False
+
+def inflar_airbag():
+    print("Impacto detectado! Airbag ativado e inflando...")
+    for i in range(1, 11):
+        print(f"Inflando... {i*10}%")
+        time.sleep(0.1)
+    print("Airbag completamente inflado!")
+
+def sistema_de_processamento_sinal():
+    aceleracoes = deque(maxlen=TAM_FILTRO)
+    aceleracao = ler_aceleracao()
+    aceleracoes.append(aceleracao)
+    aceleracao_filtrada = filtro_media_movel(list(aceleracoes), TAM_FILTRO)
+    if detectar_impacto(aceleracao_filtrada):
+        inflar_airbag()
+        return True
+    return False
+
+# Testes Unitários
+class TestSistemaAirbag(unittest.TestCase):
+
+    def test_filtro_media_movel(self):
+        # Testando o filtro de média móvel
+        dados = [10, 20, 30, 40, 50]
+        resultado = filtro_media_movel(dados, 3)
+        self.assertEqual(resultado, 40.0)  # Média dos últimos 3 valores (30, 40, 50)
+    
+    def test_detector_impacto_acima_do_limiar(self):
+        # Testando se o impacto é detectado acima do limiar
+        impacto = detectar_impacto(60)  # Acima do limiar de 50
+        self.assertTrue(impacto)
+
+    def test_detector_impacto_abaixo_do_limiar(self):
+        # Testando se o impacto não é detectado abaixo do limiar
+        impacto = detectar_impacto(40)  # Abaixo do limiar de 50
+        self.assertFalse(impacto)
+
+    def test_inflar_airbag(self):
+        # Simulando o inflamento do airbag e medindo o tempo de resposta
+        inicio = time.time()
+        inflar_airbag()
+        fim = time.time()
+        tempo_resposta = fim - inicio
+        self.assertLess(tempo_resposta, 2, "O tempo de inflagem do airbag foi muito longo!")
+
+    def test_sistema_de_processamento_sinal(self):
+        # Testando o fluxo completo do sistema
+        sucesso = sistema_de_processamento_sinal()
+        self.assertTrue(sucesso, "O sistema não acionou o airbag quando deveria!")
+
+if __name__ == '__main__':
+    unittest.main()

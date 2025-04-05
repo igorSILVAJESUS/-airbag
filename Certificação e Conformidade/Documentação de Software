@@ -1,0 +1,14 @@
+def filtro_media_movel(dados, tamanho_filtro):
+    """
+    Aplica um filtro de média móvel nos dados.
+
+    Parâmetros:
+    dados (list): Lista de valores numéricos a serem filtrados.
+    tamanho_filtro (int): Número de valores a serem considerados na média.
+
+    Retorna:
+    float: O valor da média dos últimos 'tamanho_filtro' elementos de dados.
+    """
+    if len(dados) < tamanho_filtro:
+        return np.mean(dados)
+    return np.mean(dados[-tamanho_filtro:])

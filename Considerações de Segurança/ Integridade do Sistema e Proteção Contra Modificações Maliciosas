@@ -1,0 +1,5 @@
+import hashlib
+import hmac
+
+def gerar_assinatura(chave, mensagem):
+    return hmac.new(chave.encode(), mensagem.encode(), hashlib.sha256).hexdigest()

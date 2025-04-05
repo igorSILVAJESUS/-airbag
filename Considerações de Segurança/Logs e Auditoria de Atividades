@@ -1,0 +1,6 @@
+import logging
+
+logging.basicConfig(filename='sistema_airbag.log', level=logging.INFO)
+
+def log_impacto(aceleracao, impacto_detectado):
+    logging.info(f"Aceleração: {aceleracao}, Impacto detectado: {impacto_detectado}")

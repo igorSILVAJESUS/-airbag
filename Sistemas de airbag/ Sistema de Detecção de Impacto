@@ -1,0 +1,44 @@
+import random
+import time
+
+# definir a aceleração para ativar o airbag
+LIMIAR_DE_ACELERACAO = 50  # valor crítico do impacto
+TEMPO_DE_AQUISICAO = 1  # simulando o tempo de coleta
+
+
+
+def ler_aceleracao():
+    
+    
+    aceleracao = random.uniform(0, 100)  
+    return aceleracao
+
+
+def verificar_impacto(aceleracao):
+    if aceleracao >= LIMIAR_DE_ACELERACAO:
+        
+        print("Impacto detectado! Airbag ativado!")
+        return True
+    else:
+        print(f"Aceleração: {aceleracao} m/s² - Nenhum impacto detectado.")
+        return False
+
+
+def sistema_de_detecao_de_impacto():
+    print("Sistema de detecção de impacto iniciado.")
+    while True:
+
+        aceleracao = ler_aceleracao()
+        print(f"Acelerando... Aceleração atual: {aceleracao} m/s²")
+        
+        
+        if verificar_impacto(aceleracao):
+            
+            print("Sistema reiniciando...\n")
+            time.sleep(3)
+        else:
+        
+            time.sleep(TEMPO_DE_AQUISICAO)
+
+
+sistema_de_detecao_de_impacto()

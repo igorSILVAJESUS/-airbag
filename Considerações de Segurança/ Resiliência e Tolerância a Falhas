@@ -1,0 +1,7 @@
+def verificar_sistema():
+    if sistema_falhou():
+        
+        print("Falha detectada. Reiniciando sistema...")
+        reiniciar_sistema()
+    else:
+        print("Sistema funcionando corretamente")

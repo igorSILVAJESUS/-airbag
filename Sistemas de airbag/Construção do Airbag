@@ -1,0 +1,42 @@
+import random
+import time
+import numpy as np
+from collections import deque
+
+LIMIAR_DE_ACELERACAO = 50
+TAM_FILTRO = 5
+TEMPO_DE_AQUISICAO = 1
+
+def ler_aceleracao():
+    return random.uniform(0, 100)
+
+def filtro_media_movel(dados, tamanho_filtro):
+    if len(dados) < tamanho_filtro:
+        return np.mean(dados)
+    return np.mean(dados[-tamanho_filtro:])
+
+def detectar_impacto(aceleracao_filtrada):
+    if aceleracao_filtrada >= LIMIAR_DE_ACELERACAO:
+        return True
+    return False
+
+def inflar_airbag():
+    print("Airbag ativado! Inflando...")
+
+def sistema_de_processamento_sinal():
+    print("Iniciando sistema de processamento de sinal...")
+    aceleracoes = deque(maxlen=TAM_FILTRO)
+    while True:
+        aceleracao = ler_aceleracao()
+        print(f"Acelerando... Aceleração bruta: {aceleracao:.2f} m/s²")
+        aceleracoes.append(aceleracao)
+        aceleracao_filtrada = filtro_media_movel(list(aceleracoes), TAM_FILTRO)
+        print(f"Aceleração filtrada: {aceleracao_filtrada:.2f} m/s²")
+        if detectar_impacto(aceleracao_filtrada):
+            inflar_airbag()
+            break
+        else:
+            print(f"Aceleracao normal. Nenhum impacto detectado.")
+        time.sleep(TEMPO_DE_AQUISICAO)
+
+sistema_de_processamento_sinal()

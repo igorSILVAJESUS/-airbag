@@ -1,0 +1,6 @@
+def detectar_impacto(aceleracao_filtrada):
+    limiar_superior = 75  
+    limiar_inferior = 50  
+    if aceleracao_filtrada >= limiar_superior:
+        return True
+    return False

@@ -1,0 +1,20 @@
+import unittest
+
+class TestSistemaAirbag(unittest.TestCase):
+
+    def test_detector_impacto(self):
+        # Testando a detecção de impacto acima do limiar
+        impacto = detectar_impacto(60)  # Aceleracao maior que 50
+        self.assertTrue(impacto)
+
+    def test_detector_impacto_sem_impacto(self):
+        # Testando a detecção de impacto abaixo do limiar
+        impacto = detectar_impacto(40)  # Aceleracao menor que 50
+        self.assertFalse(impacto)
+    
+    def test_tempo_resposta_inflagem(self):
+        inicio = time.time()
+        inflar_airbag()  # Simulando inflagem
+        fim = time.time()
+        tempo_resposta = fim - inicio
+        self.assertLess(tempo_resposta, 0.5, "O tempo de resposta excedeu o limite")
